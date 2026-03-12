@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deep Interactive Entertainment</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+[data-theme="light"]{
+  --accent:#111111;--accent-hover:#333333;
+  --bg:#ffffff;--bg2:#f5f5f5;--bg3:#ebebeb;
+  --border:#dddddd;--text:#0a0a0a;--gray:#666666;
+  --card:#ffffff;--shadow:rgba(0,0,0,0.07);--shadow-hover:rgba(0,0,0,0.16);
+  --nav-bg:rgba(255,255,255,0.96);--footer-bg:#0a0a0a;--footer-text:#ffffff;
+  --tag-bg:rgba(0,0,0,0.05);--tag-border:rgba(0,0,0,0.1);
+}
+[data-theme="dark"]{
+  --accent:#ffffff;--accent-hover:#cccccc;
+  --bg:#0a0a0a;--bg2:#111111;--bg3:#1a1a1a;
+  --border:#2a2a2a;--text:#f0f0f0;--gray:#888888;
+  --card:#111111;--shadow:rgba(0,0,0,0.4);--shadow-hover:rgba(0,0,0,0.6);
+  --nav-bg:rgba(10,10,10,0.96);--footer-bg:#000000;--footer-text:#ffffff;
+  --tag-bg:rgba(255,255,255,0.06);--tag-border:rgba(255,255,255,0.1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Rajdhani',sans-serif;overflow-x:hidden;transition:background .4s,color .4s}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px}
+
+/* THEME TOGGLE */
+.theme-toggle{position:fixed;bottom:32px;right:32px;z-index:999;width:52px;height:52px;border-radius:50%;background:var(--accent);color:var(--bg);border:none;cursor:pointer;font-size:20px;box-shadow:0 4px 20px var(--shadow-hover);transition:all .35s;display:flex;align-items:center;justify-content:center}
+.theme-toggle:hover{transform:scale(1.12) rotate(20deg);box-shadow:0 8px 28px var(--shadow-hover)}
+.theme-toggle:active{transform:scale(0.95)}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 60px;background:var(--nav-bg);border-bottom:1px solid var(--border);backdrop-filter:blur(14px);transition:background .4s,border-color .4s;box-shadow:0 2px 16px var(--shadow)}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-img{width:44px;height:44px;object-fit:contain;transition:all .4s}
+.logo-img:hover{transform:scale(1.1);opacity:.85}
+.logo-txt{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--text);line-height:1.3;letter-spacing:1px;transition:color .4s}
+.logo-sub{font-size:9px;color:var(--gray);letter-spacing:3px}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:12px;letter-spacing:2px;font-weight:600;text-transform:uppercase;transition:color .3s;position:relative;padding-bottom:4px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent);transition:width .3s;border-radius:2px}
+.nav-links a:hover{color:var(--text)}.nav-links a:hover::after{width:100%}
+.nav-social{display:flex;gap:8px}
+.nav-social a{width:34px;height:34px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;border-radius:8px;text-decoration:none;transition:all .3s;background:var(--bg);overflow:hidden}
+.nav-social a img{width:20px;height:20px;object-fit:contain;transition:all .3s;filter:var(--icon-filter)}
+[data-theme="light"] .nav-social a img{filter:grayscale(1) brightness(0.3)}
+[data-theme="dark"] .nav-social a img{filter:grayscale(1) brightness(2)}
+.nav-social a:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 6px 14px var(--shadow)}
+[data-theme="light"] .nav-social a:hover img{filter:grayscale(0) brightness(1)}
+[data-theme="dark"] .nav-social a:hover img{filter:grayscale(0) brightness(1)}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;padding:120px 40px 80px;background:var(--bg);transition:background .4s}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:50px 50px;opacity:.5;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black 0%,transparent 80%);transition:opacity .4s}
+.hero-accent{position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:var(--accent);opacity:.03;animation:breathe 6s ease-in-out infinite;pointer-events:none}
+.hero-accent2{position:absolute;bottom:-150px;left:-100px;width:400px;height:400px;border-radius:50%;background:var(--accent);opacity:.03;animation:breathe 8s ease-in-out infinite reverse;pointer-events:none}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+.htag{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--gray);margin-bottom:20px;position:relative;z-index:2;animation:fu .8s ease both;background:var(--tag-bg);padding:6px 16px;border-radius:20px;border:1px solid var(--tag-border)}
+.htitle{font-family:'Orbitron',monospace;font-size:clamp(42px,8vw,100px);font-weight:900;line-height:.95;text-align:center;position:relative;z-index:2;animation:fu .8s .15s ease both;color:var(--text);transition:color .4s}
+.t1{display:block}
+.t2{display:block;-webkit-text-stroke:2px var(--accent);color:transparent;transition:all .4s}
+.t3{display:block;font-size:.45em;letter-spacing:12px;margin-top:12px;color:var(--gray);font-weight:400}
+.hline{margin-top:28px;font-size:17px;color:var(--gray);letter-spacing:3px;text-transform:uppercase;font-weight:400;position:relative;z-index:2;text-align:center;animation:fu .8s .3s ease both}
+.hcta{margin-top:48px;display:flex;gap:20px;flex-wrap:wrap;justify-content:center;position:relative;z-index:2;animation:fu .8s .45s ease both}
+
+/* BUTTONS */
+.btnp{position:relative;padding:15px 40px;background:var(--accent);color:var(--bg);font-family:'Orbitron',monospace;font-size:12px;font-weight:700;letter-spacing:2px;text-decoration:none;text-transform:uppercase;border-radius:4px;transition:all .3s;overflow:hidden;display:inline-flex;align-items:center;gap:10px;box-shadow:0 4px 16px var(--shadow)}
+.btnp img{width:20px;height:20px;object-fit:contain;filter:var(--btn-icon-filter)}
+[data-theme="light"] .btnp img{filter:brightness(0) invert(1)}
+[data-theme="dark"] .btnp img{filter:brightness(0)}
+.btnp::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);transition:left .45s}
+.btnp:hover{background:var(--accent-hover);box-shadow:0 8px 28px var(--shadow-hover);transform:translateY(-3px)}.btnp:hover::before{left:100%}
+.btnp:active{transform:translateY(-1px)}
+
+.btns{position:relative;padding:15px 40px;border:2px solid var(--accent);color:var(--accent);font-family:'Orbitron',monospace;font-size:12px;font-weight:700;letter-spacing:2px;text-decoration:none;text-transform:uppercase;border-radius:4px;background:transparent;transition:all .3s;overflow:hidden;display:inline-block}
+.btns-inner{position:relative;z-index:1}
+.btns::before{content:'';position:absolute;inset:0;background:var(--accent);opacity:0;transition:opacity .3s}
+.btns:hover{box-shadow:0 8px 24px var(--shadow);transform:translateY(-3px)}.btns:hover::before{opacity:1}
+.btns:hover .btns-inner{color:var(--bg)}
+.btns:active{transform:translateY(-1px)}
+
+.hstats{position:relative;z-index:2;margin-top:80px;display:flex;gap:60px;animation:fu .8s .6s ease both}
+.stat{text-align:center}
+.sn{font-family:'Orbitron',monospace;font-size:36px;font-weight:900;color:var(--text);display:block;transition:color .4s}
+.sl{font-size:11px;color:var(--gray);letter-spacing:3px;text-transform:uppercase;margin-top:4px}
+.sdiv{width:1px;background:var(--border);align-self:stretch}
+@keyframes fu{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTIONS */
+section{padding:100px 60px;transition:background .4s}
+.shdr{text-align:center;margin-bottom:72px}
+.stag{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:5px;color:var(--gray);text-transform:uppercase;display:block;margin-bottom:12px}
+.stitle{font-family:'Orbitron',monospace;font-size:clamp(26px,4vw,46px);font-weight:900;color:var(--text);transition:color .4s}
+.stitle span{-webkit-text-stroke:1.5px var(--accent);color:transparent}
+.sdesc{margin-top:14px;font-size:16px;color:var(--gray);max-width:540px;margin-left:auto;margin-right:auto;line-height:1.7;font-weight:300}
+
+/* ABOUT */
+#about{background:var(--bg2)}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1100px;margin:0 auto}
+.atxt h2{font-family:'Orbitron',monospace;font-size:30px;font-weight:900;color:var(--text);margin-bottom:20px;line-height:1.2;transition:color .4s}
+.atxt h2 span{-webkit-text-stroke:1px var(--accent);color:transparent}
+.atxt p{font-size:16px;color:var(--gray);line-height:1.8;margin-bottom:14px;font-weight:300}
+.afeats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px}
+.feat{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--gray);letter-spacing:1px;font-weight:600;transition:color .3s;padding:4px 0}
+.feat::before{content:'▸';color:var(--accent);transition:transform .3s}
+.feat:hover{color:var(--text)}.feat:hover::before{transform:translateX(4px)}
+.acard{background:var(--card);border:1.5px solid var(--border);padding:40px;border-radius:12px;box-shadow:0 4px 24px var(--shadow);transition:all .4s;position:relative;overflow:hidden}
+.acard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent)}
+.acard:hover{box-shadow:0 12px 40px var(--shadow-hover);transform:translateY(-4px)}
+.ctag{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--gray);letter-spacing:2px;margin-bottom:24px}
+.srow{display:flex;gap:32px;flex-wrap:wrap}
+.sb .n{font-family:'Orbitron',monospace;font-size:40px;font-weight:900;color:var(--text);display:block;transition:color .4s}
+.sb .l{font-size:11px;color:var(--gray);letter-spacing:2px;text-transform:uppercase}
+.plat{margin-top:32px;padding-top:28px;border-top:1.5px solid var(--border);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.plbl{font-size:11px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-right:4px}
+.pbadge{padding:5px 14px;border:1.5px solid var(--border);font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text);border-radius:20px;transition:all .3s;cursor:default;font-weight:600}
+.pbadge:hover{background:var(--accent);color:var(--bg);border-color:var(--accent);transform:translateY(-2px)}
+
+/* PLATFORMS */
+#platforms{background:var(--bg)}
+.plat-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;max-width:1100px;margin:0 auto}
+.plat-card{background:var(--card);border:1.5px solid var(--border);padding:36px 28px;text-align:center;border-radius:12px;transition:all .4s;position:relative;overflow:hidden}
+.plat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--accent);transform:scaleX(0);transition:transform .35s;transform-origin:left}
+.plat-card:hover{box-shadow:0 16px 48px var(--shadow-hover);transform:translateY(-6px);border-color:var(--accent)}.plat-card:hover::after{transform:scaleX(1)}
+.plat-logo{width:72px;height:72px;object-fit:contain;margin:0 auto 16px;display:block;transition:transform .4s}
+[data-theme="light"] .plat-logo{filter:grayscale(1) brightness(0.2)}
+[data-theme="dark"] .plat-logo{filter:grayscale(1) brightness(3)}
+.plat-card:hover .plat-logo{transform:scale(1.15)}
+[data-theme="light"] .plat-card:hover .plat-logo{filter:grayscale(0) brightness(1)}
+[data-theme="dark"] .plat-card:hover .plat-logo{filter:grayscale(0) brightness(1)}
+.plat-name{font-family:'Orbitron',monospace;font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;transition:color .4s}
+.plat-desc{font-size:13px;color:var(--gray);line-height:1.6;font-weight:300}
+
+/* GAMES */
+#games{background:var(--bg2)}
+.ggrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:32px;max-width:1100px;margin:0 auto}
+.gcard{background:var(--card);border:1.5px solid var(--border);overflow:hidden;border-radius:12px;transition:all .4s}
+.gcard:hover{box-shadow:0 20px 60px var(--shadow-hover);transform:translateY(-8px);border-color:var(--accent)}
+.gthumb{width:100%;height:220px;background:var(--bg3);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.gthumb img.cover{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.gcard:hover .gthumb img.cover{transform:scale(1.06)}
+.gbadge{position:absolute;top:12px;left:12px;padding:5px 12px;background:var(--accent);color:var(--bg);font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;border-radius:4px;animation:badgepulse 2.5s ease-in-out infinite}
+@keyframes badgepulse{0%,100%{opacity:1}50%{opacity:.6}}
+.ginfo{padding:24px 28px}
+.ggenre{font-size:11px;color:var(--gray);letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;font-family:'Share Tech Mono',monospace}
+.gtitle{font-family:'Orbitron',monospace;font-size:22px;font-weight:700;color:var(--text);margin-bottom:10px;transition:color .4s}
+.gdesc{font-size:14px;color:var(--gray);line-height:1.6;font-weight:300;margin-bottom:20px}
+.btnstm{display:inline-flex;align-items:center;gap:10px;padding:11px 22px;background:var(--bg3);border:1.5px solid var(--border);color:var(--text);text-decoration:none;font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;transition:all .3s;border-radius:6px}
+.btnstm img{width:20px;height:20px;object-fit:contain}
+[data-theme="light"] .btnstm img{filter:grayscale(1) brightness(0.2)}
+[data-theme="dark"] .btnstm img{filter:grayscale(1) brightness(3)}
+.btnstm:hover{background:var(--accent);color:var(--bg);border-color:var(--accent);box-shadow:0 6px 20px var(--shadow);transform:translateY(-2px)}
+[data-theme="light"] .btnstm:hover img{filter:brightness(0) invert(1)}
+[data-theme="dark"] .btnstm:hover img{filter:brightness(0)}
+
+/* TEAM */
+#team{background:var(--bg)}
+.tgrid{display:flex;gap:32px;flex-wrap:wrap;justify-content:center;max-width:1100px;margin:0 auto}
+.tcard{flex:1;min-width:240px;max-width:300px;background:var(--card);border:1.5px solid var(--border);padding:36px 28px;text-align:center;border-radius:12px;transition:all .35s}
+.tcard:hover{box-shadow:0 20px 50px var(--shadow-hover);transform:translateY(-6px);border-color:var(--accent)}
+.av{width:90px;height:90px;border-radius:50%;border:2px solid var(--border);margin:0 auto 20px;overflow:hidden;transition:all .4s;background:var(--bg2)}
+.tcard:hover .av{border-color:var(--accent);box-shadow:0 0 0 4px var(--tag-bg)}
+.av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.tname{font-family:'Orbitron',monospace;font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px;transition:color .4s}
+.trole{font-size:11px;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;font-family:'Share Tech Mono',monospace}
+.tbio{font-size:13px;color:var(--gray);line-height:1.6;font-weight:300;margin-bottom:20px}
+.tlink{display:inline-flex;align-items:center;gap:6px;padding:8px 20px;border:1.5px solid var(--border);color:var(--text);text-decoration:none;font-size:11px;letter-spacing:2px;font-family:'Share Tech Mono',monospace;border-radius:6px;transition:all .3s;position:relative;overflow:hidden}
+.tlink-inner{position:relative;z-index:1}
+.tlink::before{content:'';position:absolute;inset:0;background:var(--accent);opacity:0;transition:opacity .3s}
+.tlink:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 16px var(--shadow)}.tlink:hover::before{opacity:1}
+.tlink:hover .tlink-inner{color:var(--bg)}
+
+/* SOCIAL */
+#social{background:var(--bg2)}
+.social-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;max-width:700px;margin:0 auto}
+.sico-link{width:56px;height:56px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;text-decoration:none;border-radius:12px;transition:all .35s;background:var(--card);position:relative;overflow:hidden}
+.sico-link img{width:28px;height:28px;object-fit:contain;transition:all .3s;position:relative;z-index:1}
+[data-theme="light"] .sico-link img{filter:grayscale(1) brightness(0.3)}
+[data-theme="dark"] .sico-link img{filter:grayscale(1) brightness(2)}
+.sico-link::after{content:attr(data-tip);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;padding:4px 10px;white-space:nowrap;border-radius:4px;opacity:0;pointer-events:none;transition:opacity .25s;z-index:20}
+.sico-link:hover::after{opacity:1}
+.sico-link::before{content:'';position:absolute;inset:0;background:var(--accent);opacity:0;transition:opacity .3s}
+.sico-link:hover{border-color:var(--accent);transform:translateY(-5px) scale(1.1);box-shadow:0 10px 24px var(--shadow-hover)}.sico-link:hover::before{opacity:1}
+[data-theme="light"] .sico-link:hover img{filter:brightness(0) invert(1)}
+[data-theme="dark"] .sico-link:hover img{filter:brightness(0)}
+
+/* CONTACT */
+#contact{background:var(--bg)}
+.cwrap{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.cinfo h3{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;color:var(--text);margin-bottom:24px;transition:color .4s}
+.citem{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px;transition:all .3s;padding:12px;border-radius:8px}
+.citem:hover{transform:translateX(4px);background:var(--bg2)}
+.cico{width:36px;height:36px;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text);font-size:14px;flex-shrink:0;border-radius:8px;background:var(--bg2);transition:all .3s}
+.citem:hover .cico{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.ctxt{font-size:14px;color:var(--gray);line-height:1.6}
+.ctxt strong{color:var(--text);display:block;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:3px;transition:color .4s}
+.ctxt a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);transition:all .3s}.ctxt a:hover{opacity:.6}
+.fg{margin-bottom:18px}
+.fg label{display:block;font-size:11px;letter-spacing:2px;color:var(--gray);text-transform:uppercase;margin-bottom:8px;font-family:'Share Tech Mono',monospace}
+.fg input,.fg textarea{width:100%;padding:12px 16px;background:var(--bg2);border:1.5px solid var(--border);color:var(--text);font-family:'Rajdhani',sans-serif;font-size:15px;outline:none;transition:all .3s;resize:none;border-radius:6px}
+.fg input:focus,.fg textarea:focus{border-color:var(--accent);background:var(--card);box-shadow:0 0 0 3px var(--tag-bg)}
+.fg textarea{height:110px}
+.btnsub{width:100%;padding:14px;background:var(--accent);color:var(--bg);border:none;cursor:pointer;font-family:'Orbitron',monospace;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;border-radius:6px;transition:all .3s;position:relative;overflow:hidden;box-shadow:0 4px 16px var(--shadow)}
+.btnsub::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);transition:left .45s}
+.btnsub:hover{background:var(--accent-hover);box-shadow:0 8px 28px var(--shadow-hover);transform:translateY(-2px)}.btnsub:hover::before{left:100%}
+.btnsub:active{transform:translateY(0)}
+.btnsub:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.form-msg{margin-top:12px;font-family:'Share Tech Mono',monospace;font-size:12px;text-align:center;height:20px}
+.form-msg.ok{color:#22aa55}.form-msg.err{color:#cc3333}
+
+/* FOOTER */
+footer{background:var(--footer-bg);padding:40px 60px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;transition:background .4s}
+.flogo{font-family:'Orbitron',monospace;font-size:14px;font-weight:900;color:var(--footer-text)}
+.fcopy{font-size:12px;color:rgba(255,255,255,.35);letter-spacing:1px}
+.flinks{display:flex;gap:24px}
+.flinks a{font-size:12px;color:rgba(255,255,255,.35);text-decoration:none;letter-spacing:1px;transition:color .3s}
+.flinks a:hover{color:var(--footer-text)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .65s ease,transform .65s ease}
+.reveal.show{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  nav{padding:14px 20px}.nav-links{display:none}
+  section{padding:72px 20px}
+  .agrid,.cwrap{grid-template-columns:1fr}
+  .hstats{gap:28px}
+  footer{padding:28px 20px;flex-direction:column;text-align:center}
+  .theme-toggle{bottom:20px;right:20px}
+}
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" title="Toggle theme">🌙</button>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="logo.png" alt="DIE Logo" class="logo-img">
+    <div>
+      <div class="logo-txt">DEEP INTERACTIVE</div>
+      <div class="logo-sub">ENTERTAINMENT</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">Studio</a></li>
+    <li><a href="#platforms">Platforms</a></li>
+    <li><a href="#games">Games</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#social">Connect</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-social">
+    <a href="https://store.steampowered.com/app/4308870/Chaos_Budz/" target="_blank" title="Steam"><img src="steam.jpg" alt="Steam"></a>
+    <a href="https://discord.gg/qjadxBWn" target="_blank" title="Discord"><img src="discord.jpg" alt="Discord"></a>
+    <a href="https://www.youtube.com/@DeepInteractiveEntertainment" target="_blank" title="YouTube"><img src="youtube.jpg" alt="YouTube"></a>
+    <a href="https://www.instagram.com/deepinteractiveentertainment/" target="_blank" title="Instagram"><img src="instagram.jpg" alt="Instagram"></a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-grid"></div>
+  <div class="hero-accent"></div>
+  <div class="hero-accent2"></div>
+  <div class="htag">// EST. ISTANBUL, TURKEY — INDEPENDENT GAME STUDIO</div>
+  <h1 class="htitle">
+    <span class="t1">DEEP</span>
+    <span class="t2">INTERACTIVE</span>
+    <span class="t3">E N T E R T A I N M E N T</span>
+  </h1>
+  <p class="hline">We Build Worlds. You Play Them.</p>
+  <div class="hcta">
+    <a href="https://store.steampowered.com/app/4308870/Chaos_Budz/" target="_blank" class="btnp">
+      <img src="steam.jpg" alt="Steam"> Play on Steam
+    </a>
+    <a href="#games" class="btns"><span class="btns-inner">Our Games ▸</span></a>
+  </div>
+  <div class="hstats">
+    <div class="stat"><span class="sn">PC</span><span class="sl">&amp; Console</span></div>
+    <div class="sdiv"></div>
+    <div class="stat"><span class="sn">🌍</span><span class="sl">Global Release</span></div>
+    <div class="sdiv"></div>
+    <div class="stat"><span class="sn">IST</span><span class="sl">Istanbul Based</span></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="agrid">
+    <div class="atxt reveal">
+      <h2>We Are <span>Deep Interactive</span> Entertainment</h2>
+      <p>An independent team skilled in <strong style="color:var(--text)">PS, XBOX, and PC</strong> game development. We aim to develop projects with rich storytelling and fluid gameplay, including online and multiplayer experiences.</p>
+      <p>Our goal is to realize high quality projects as an experienced team in both design and development.</p>
+      <div class="afeats">
+        <div class="feat">PC Game Development</div>
+        <div class="feat">Console Titles</div>
+        <div class="feat">Steam Publishing</div>
+        <div class="feat">PlayStation &amp; Xbox</div>
+        <div class="feat">3D Environments</div>
+        <div class="feat">Indie Innovation</div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="acard">
+        <div class="ctag">// STUDIO.INFO</div>
+        <div class="srow">
+          <div class="sb"><span class="n">1</span><span class="l">Game Released</span></div>
+          <div class="sb"><span class="n">3</span><span class="l">Core Team</span></div>
+          <div class="sb"><span class="n">∞</span><span class="l">Ambition</span></div>
+        </div>
+        <div class="plat">
+          <span class="plbl">Platforms</span>
+          <span class="pbadge">PC</span>
+          <span class="pbadge">STEAM</span>
+          <span class="pbadge">PS5</span>
+          <span class="pbadge">XBOX</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORMS -->
+<section id="platforms">
+  <div class="shdr reveal">
+    <span class="stag">// PLATFORMS</span>
+    <h2 class="stitle">Where We <span>Deploy</span></h2>
+    <p class="sdesc">From PC to living room consoles — we build for every player, everywhere.</p>
+  </div>
+  <div class="plat-cards">
+    <div class="plat-card reveal">
+      <img src="pc.jpg" alt="PC" class="plat-logo">
+      <div class="plat-name">PC / Steam</div>
+      <p class="plat-desc">High-fidelity gaming on Windows &amp; Linux. Our primary platform with full mod support and community features.</p>
+    </div>
+    <div class="plat-card reveal">
+      <img src="ps.jpg" alt="PlayStation" class="plat-logo">
+      <div class="plat-name">PlayStation</div>
+      <p class="plat-desc">Bringing our titles to PS4 &amp; PS5 — optimized for DualSense haptics and stunning 4K visuals.</p>
+    </div>
+    <div class="plat-card reveal">
+      <img src="xbox.jpg" alt="Xbox" class="plat-logo">
+      <div class="plat-name">Xbox</div>
+      <p class="plat-desc">Xbox One &amp; Series X|S support with Game Pass integration and cross-play capabilities.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section id="games">
+  <div class="shdr reveal">
+    <span class="stag">// GAMES</span>
+    <h2 class="stitle">Our <span>Releases</span></h2>
+    <p class="sdesc">Titles crafted with passion and precision — available on Steam and coming to all platforms.</p>
+  </div>
+  <div class="ggrid">
+    <div class="gcard reveal">
+      <div class="gthumb">
+        <img src="chaos_budz.jpg" alt="Chaos Budz" class="cover">
+        <div class="gbadge">AVAILABLE NOW</div>
+      </div>
+      <div class="ginfo">
+        <div class="ggenre">Action · PC · 2025</div>
+        <h3 class="gtitle">Chaos Budz</h3>
+        <p class="gdesc">Dive into a wild, action-packed experience. Chaos Budz delivers fast-paced gameplay with unique mechanics and an unforgettable world. Now live on Steam!</p>
+        <a href="https://store.steampowered.com/app/4308870/Chaos_Budz/" target="_blank" class="btnstm">
+          <img src="steam.jpg" alt="Steam"> View on Steam
+        </a>
+      </div>
+    </div>
+    <div class="gcard reveal" style="opacity:.55">
+      <div class="gthumb" style="background:var(--bg3)">
+        <span style="font-family:'Orbitron',monospace;font-size:60px;font-weight:900;color:var(--border)">??</span>
+        <div class="gbadge" style="animation:none">COMING SOON</div>
+      </div>
+      <div class="ginfo">
+        <div class="ggenre">TBA · PC &amp; Console</div>
+        <h3 class="gtitle">Next Project</h3>
+        <p class="gdesc">Something big is brewing in our Istanbul studio. Multi-platform from day one. Follow our Discord to be first in line.</p>
+        <a href="https://discord.gg/qjadxBWn" target="_blank" class="btns" style="font-size:12px;padding:10px 22px"><span class="btns-inner">Join Discord for Updates</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team">
+  <div class="shdr reveal">
+    <span class="stag">// TEAM</span>
+    <h2 class="stitle">The <span>Crew</span></h2>
+    <p class="sdesc">A small, focused team with big ambitions — each member a specialist, together unstoppable.</p>
+  </div>
+  <div class="tgrid">
+    <div class="tcard reveal">
+      <div class="av"><img src="bilal.jpg" alt="Bilal Cin"></div>
+      <div class="tname">Bilal Cin</div>
+      <div class="trole">Founder &amp; Developer</div>
+      <p class="tbio">The visionary behind Deep Interactive. Bilal leads development and drives the studio's creative direction from Istanbul.</p>
+      <a href="https://www.linkedin.com/in/bilal-cin-6ba1a71b6/" target="_blank" class="tlink"><span class="tlink-inner">in LinkedIn ↗</span></a>
+    </div>
+    <div class="tcard reveal">
+      <div class="av"><img src="bulut.jpg" alt="Bulut Soyal"></div>
+      <div class="tname">Bulut Soyal</div>
+      <div class="trole">Game &amp; Level Designer</div>
+      <p class="tbio">Crafting the worlds players explore. Bulut shapes the gameplay experience through thoughtful design and creative mechanics.</p>
+      <a href="https://www.linkedin.com/in/bulut-soyal-31876ba6/" target="_blank" class="tlink"><span class="tlink-inner">in LinkedIn ↗</span></a>
+    </div>
+    <div class="tcard reveal">
+      <div class="av"><img src="isaac.jpg" alt="Isaac Rojas"></div>
+      <div class="tname">Isaac Rojas</div>
+      <div class="trole">3D Artist</div>
+      <p class="tbio">Bringing visual worlds to life. Isaac Rojas Sepulveda sculpts stunning 3D environments that define our games' aesthetic.</p>
+      <a href="https://www.linkedin.com/in/isaac-rojas-sepulveda-8b045930b/" target="_blank" class="tlink"><span class="tlink-inner">in LinkedIn ↗</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL -->
+<section id="social">
+  <div class="shdr reveal">
+    <span class="stag">// CONNECT</span>
+    <h2 class="stitle">Find Us <span>Online</span></h2>
+    <p class="sdesc">Join our community. Follow the journey, hop in the Discord, never miss a launch.</p>
+  </div>
+  <div class="social-row reveal">
+    <a href="https://steamcommunity.com/chat/invite/IM10lEh0" target="_blank" class="sico-link" data-tip="STEAM"><img src="steam.jpg" alt="Steam"></a>
+    <a href="https://discord.gg/qjadxBWn" target="_blank" class="sico-link" data-tip="DISCORD"><img src="discord.jpg" alt="Discord"></a>
+    <a href="https://www.youtube.com/@DeepInteractiveEntertainment" target="_blank" class="sico-link" data-tip="YOUTUBE"><img src="youtube.jpg" alt="YouTube"></a>
+    <a href="https://www.instagram.com/deepinteractiveentertainment/" target="_blank" class="sico-link" data-tip="INSTAGRAM"><img src="instagram.jpg" alt="Instagram"></a>
+    <a href="https://www.facebook.com/profile.php?id=61579524501721" target="_blank" class="sico-link" data-tip="FACEBOOK"><img src="facebook.jpg" alt="Facebook"></a>
+    <a href="https://www.reddit.com/user/Choice_Arugula_4974/" target="_blank" class="sico-link" data-tip="REDDIT"><img src="reddit.jpg" alt="Reddit"></a>
+    <a href="https://www.linkedin.com/company/deepinteractiveentertainment/about/?viewAsMember=true" target="_blank" class="sico-link" data-tip="LINKEDIN"><img src="linkedin.jpg" alt="LinkedIn"></a>
+    <a href="#" target="_blank" class="sico-link" data-tip="X / TWITTER"><img src="twitter.jpg" alt="Twitter"></a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="shdr reveal">
+    <span class="stag">// CONTACT</span>
+    <h2 class="stitle">Get In <span>Touch</span></h2>
+    <p class="sdesc">For collaborations, press inquiries, or just to say hi — we'd love to hear from you.</p>
+  </div>
+  <div class="cwrap">
+    <div class="cinfo reveal">
+      <h3>Contact Info</h3>
+      <div class="citem"><div class="cico">📧</div><div class="ctxt"><strong>Email</strong><a href="mailto:deepinteractiveentertainment@gmail.com">deepinteractiveentertainment@gmail.com</a></div></div>
+      <div class="citem"><div class="cico">📍</div><div class="ctxt"><strong>Location</strong>Beşiktaş, Istanbul — Turkey</div></div>
+      <div class="citem"><div class="cico">🎮</div><div class="ctxt"><strong>Steam Store</strong><a href="https://store.steampowered.com/app/4308870/Chaos_Budz/" target="_blank">Chaos Budz on Steam ↗</a></div></div>
+      <div class="citem"><div class="cico">💬</div><div class="ctxt"><strong>Discord</strong><a href="https://discord.gg/qjadxBWn" target="_blank">Join our server ↗</a></div></div>
+    </div>
+    <div class="reveal">
+      <div class="fg"><label>Name</label><input type="text" id="fname" placeholder="Your name"></div>
+      <div class="fg"><label>Email</label><input type="email" id="femail" placeholder="your@email.com"></div>
+      <div class="fg"><label>Message</label><textarea id="fmsg" placeholder="Tell us what's on your mind..."></textarea></div>
+      <button class="btnsub" id="sendbtn" onclick="sendMail()">SEND MESSAGE ▸</button>
+      <div class="form-msg" id="formmsg"></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="flogo">DEEP INTERACTIVE ENTERTAINMENT</div>
+  <div class="fcopy">© 2025 Deep Interactive Entertainment. Istanbul, Turkey.</div>
+  <div class="flinks">
+    <a href="mailto:deepinteractiveentertainment@gmail.com">Contact</a>
+    <a href="https://store.steampowered.com/app/4308870/Chaos_Budz/" target="_blank">Steam</a>
+    <a href="https://discord.gg/qjadxBWn" target="_blank">Discord</a>
+  </div>
+</footer>
+
+<script>
+// Theme
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('themeBtn');
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  btn.textContent = isDark ? '🌙' : '☀️';
+  localStorage.setItem('die-theme', isDark ? 'light' : 'dark');
+}
+(function(){
+  const saved = localStorage.getItem('die-theme') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  document.getElementById('themeBtn').textContent = saved === 'dark' ? '☀️' : '🌙';
+})();
+
+// EmailJS
+emailjs.init('XYEbpF6hgs9H2XyD4');
+function sendMail() {
+  const name  = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const msg   = document.getElementById('fmsg').value.trim();
+  const btn   = document.getElementById('sendbtn');
+  const out   = document.getElementById('formmsg');
+  if (!name || !email || !msg) { out.textContent='⚠ Please fill in all fields.'; out.className='form-msg err'; return; }
+  btn.disabled=true; btn.textContent='SENDING...'; out.textContent='';
+  emailjs.send('service_j9slh1f','template_va2gljr',{
+    from_name: name,
+    from_email: email,
+    reply_to: email,
+    message: msg,
+    to_email: 'deepinteractiveentertainment@gmail.com'
+  }).then(()=>{
+    out.textContent="✓ Message sent! We'll get back to you soon."; out.className='form-msg ok'; btn.textContent='SENT ✓';
+    document.getElementById('fname').value=''; document.getElementById('femail').value=''; document.getElementById('fmsg').value='';
+    setTimeout(()=>{ btn.disabled=false; btn.textContent='SEND MESSAGE ▸'; },4000);
+  }).catch(()=>{ out.textContent='✗ Failed. Please email us directly.'; out.className='form-msg err'; btn.disabled=false; btn.textContent='SEND MESSAGE ▸'; });
+}
+
+// Scroll reveal
+const ro = new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{ if(e.isIntersecting){ setTimeout(()=>e.target.classList.add('show'),i*80); ro.unobserve(e.target); } });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
+</body>
+</html>
