@@ -634,6 +634,23 @@ section { padding: 100px 60px; transition: background .4s; }
 [data-theme="light"] .sico-link:hover img { filter: brightness(0) invert(1); }
 [data-theme="dark"]  .sico-link:hover img { filter: brightness(0); }
 
+/* Font Awesome & SVG icon links */
+.sico-fa i, .sico-fa svg {
+  width: 28px; height: 28px;
+  font-size: 22px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1;
+  transition: all .3s;
+}
+[data-theme="light"] .sico-fa i,
+[data-theme="light"] .sico-fa svg { color: #222; fill: #222; }
+[data-theme="dark"]  .sico-fa i,
+[data-theme="dark"]  .sico-fa svg { color: #eee; fill: #eee; }
+.sico-link:hover .sico-fa i,
+.sico-link:hover .sico-fa svg,
+.sico-fa:hover i,
+.sico-fa:hover svg { color: var(--bg); fill: var(--bg); }
+
 /* ============================================================
    CONTACT
    ============================================================ */

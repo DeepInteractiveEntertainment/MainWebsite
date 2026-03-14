@@ -35,6 +35,7 @@
 <link rel="icon" type="image/png" href="assets/images/logo.ico">
 <link rel="apple-touch-icon" href="assets/images/logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <link rel="stylesheet" href="assets/css/style.css">
 <style>
@@ -409,6 +410,9 @@
     <a href="https://www.reddit.com/user/Choice_Arugula_4974/" target="_blank" class="sico-link" data-tip="REDDIT"><img src="assets/images/reddit.jpg" alt="Reddit"></a>
     <a href="https://www.linkedin.com/company/deepinteractiveentertainment/about/?viewAsMember=true" target="_blank" class="sico-link" data-tip="LINKEDIN"><img src="assets/images/linkedin.jpg" alt="LinkedIn"></a>
     <a href="https://x.com/Deep_Int_Ent" target="_blank" class="sico-link" data-tip="X / TWITTER"><img src="assets/images/twitter.jpg" alt="Twitter"></a>
+    <a href="https://www.tiktok.com/@deep.interactive" target="_blank" class="sico-link sico-fa" data-tip="TIKTOK"><i class="fa-brands fa-tiktok"></i></a>
+    <a href="https://www.twitch.tv/deepinteractiveent" target="_blank" class="sico-link sico-fa" data-tip="TWITCH"><i class="fa-brands fa-twitch"></i></a>
+    <a href="https://kick.com/deepinteractiveent" target="_blank" class="sico-link sico-fa" data-tip="KICK"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="1.2em" height="1.2em" fill="currentColor"><path d="M2 2h4v6l4-6h4l-5 7 5 7h-4l-4-6v6H2V2zm16 0h4v20h-4V2z"/></svg></a>
   </div>
 </section>
 
@@ -458,5 +462,206 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
+
+<!-- DEVELOPER CREDIT - Hidden Easter Egg -->
+<div id="dev-trigger" onclick="toggleDevCard()" title=""></div>
+
+<div id="dev-overlay" onclick="closeDevCard()"></div>
+
+<div id="dev-card">
+  <button class="dev-close" onclick="closeDevCard()">✕</button>
+  <div class="dev-badge">// DEVELOPER</div>
+  <div class="dev-avatar-wrap">
+    <a href="https://www.instagram.com/horozstudyo/" target="_blank">
+      <img
+        id="dev-avatar"
+        src="https://unavatar.io/instagram/horozstudyo"
+        onerror="this.src='https://ui-avatars.com/api/?name=Horoz+Studyo&background=1a1a2e&color=fff&size=120'"
+        alt="horozstudyo"
+      >
+    </a>
+  </div>
+  <div class="dev-name">Horoz Studyo</div>
+  <div class="dev-handle">
+    <a href="https://www.instagram.com/horozstudyo/" target="_blank">@horozstudyo</a>
+  </div>
+  <div class="dev-bio">
+    Bu sitenin frontend tasarımı ve geliştirmesi tarafımdan yapılmıştır.<br>
+    Web tasarım, UI/UX ve yaratıcı dijital projeler için benimle iletişime geçebilirsin.
+  </div>
+  <a href="https://www.instagram.com/horozstudyo/" target="_blank" class="dev-ig-btn">
+    <i class="fa-brands fa-instagram"></i> Instagram'da Takip Et
+  </a>
+  <div class="dev-footer-note">Made with ♥ by Horoz Studyo</div>
+</div>
+
+<style>
+/* ── Hidden trigger dot in footer bottom-right ── */
+#dev-trigger {
+  position: fixed;
+  bottom: 14px;
+  right: 16px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ff1a1a;
+  cursor: pointer;
+  z-index: 9000;
+  box-shadow: 0 0 8px 3px rgba(255,30,30,.7), 0 0 20px 6px rgba(255,0,0,.4);
+  animation: dev-pulse 1.8s ease-in-out infinite;
+}
+#dev-trigger:hover {
+  box-shadow: 0 0 14px 6px rgba(255,30,30,.9), 0 0 32px 12px rgba(255,0,0,.6);
+  transform: scale(1.2);
+}
+@keyframes dev-pulse {
+  0%,100% { box-shadow: 0 0 8px 3px rgba(255,30,30,.7), 0 0 20px 6px rgba(255,0,0,.4); }
+  50%      { box-shadow: 0 0 16px 7px rgba(255,60,60,.9), 0 0 36px 14px rgba(255,0,0,.6); }
+}
+
+/* ── Overlay ── */
+#dev-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.65);
+  backdrop-filter: blur(6px);
+  z-index: 9100;
+}
+
+/* ── Card ── */
+#dev-card {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(.92);
+  opacity: 0;
+  width: 320px;
+  background: #0e0e16;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 20px;
+  padding: 36px 28px 28px;
+  text-align: center;
+  z-index: 9200;
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1), opacity .3s;
+  box-shadow: 0 30px 80px rgba(0,0,0,.7);
+}
+#dev-card.active {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+}
+
+.dev-close {
+  position: absolute;
+  top: 14px; right: 16px;
+  background: rgba(255,255,255,.08);
+  border: none;
+  color: #fff;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
+}
+.dev-close:hover { background: rgba(255,255,255,.2); }
+
+.dev-badge {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,.35);
+  margin-bottom: 20px;
+}
+
+.dev-avatar-wrap {
+  margin-bottom: 16px;
+}
+.dev-avatar-wrap a {
+  display: inline-block;
+}
+#dev-avatar {
+  width: 90px; height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,.15);
+  transition: border-color .3s;
+}
+#dev-avatar:hover { border-color: #e1306c; }
+
+.dev-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.dev-handle a {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 12px;
+  color: #e1306c;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+.dev-handle a:hover { text-decoration: underline; }
+
+.dev-bio {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  color: rgba(255,255,255,.55);
+  line-height: 1.6;
+  margin: 16px 0 20px;
+}
+
+.dev-ig-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 9px 22px;
+  border-radius: 30px;
+  transition: opacity .2s, transform .2s;
+  margin-bottom: 18px;
+}
+.dev-ig-btn:hover { opacity: .88; transform: scale(1.04); }
+
+.dev-footer-note {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,.2);
+  letter-spacing: 2px;
+}
+</style>
+
+<script>
+function toggleDevCard() {
+  var overlay = document.getElementById('dev-overlay');
+  var card    = document.getElementById('dev-card');
+  overlay.style.display = 'block';
+  card.style.display    = 'block';
+  setTimeout(function(){ card.classList.add('active'); }, 10);
+}
+function closeDevCard() {
+  var overlay = document.getElementById('dev-overlay');
+  var card    = document.getElementById('dev-card');
+  card.classList.remove('active');
+  setTimeout(function(){
+    overlay.style.display = 'none';
+    card.style.display    = 'none';
+  }, 350);
+}
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closeDevCard();
+});
+</script>
+
 </body>
 </html>
