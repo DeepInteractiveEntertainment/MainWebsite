@@ -752,5 +752,9 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
    INIT
    ============================================================ */
 (function init() {
-  applyLang(currentLang);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => applyLang(currentLang));
+  } else {
+    applyLang(currentLang);
+  }
 })();
