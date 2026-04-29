@@ -589,6 +589,88 @@ section { padding: 100px 60px; transition: background .4s; }
 .tlink:hover .tlink-inner { color: var(--bg); }
 
 /* ============================================================
+   INVEST
+   ============================================================ */
+#invest { background: var(--bg); }
+
+.invest-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+  max-width: 1100px;
+  margin: 0 auto 60px;
+}
+
+.invest-card {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  padding: 36px 28px;
+  border-radius: 12px;
+  transition: all .35s;
+  position: relative;
+  overflow: hidden;
+}
+.invest-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transition: transform .35s;
+}
+.invest-card:hover { box-shadow: 0 20px 50px var(--shadow-hover); transform: translateY(-6px); border-color: var(--accent); }
+.invest-card:hover::before { transform: scaleX(1); }
+
+.invest-icon {
+  font-size: 40px;
+  margin-bottom: 18px;
+  display: block;
+}
+.invest-card h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 14px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.invest-card p {
+  font-size: 13px;
+  color: var(--gray);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.invest-cta {
+  max-width: 780px;
+  margin: 0 auto;
+}
+.invest-cta-box {
+  background: var(--card);
+  border: 1.5px solid var(--accent);
+  border-radius: 16px;
+  padding: 48px 44px;
+  text-align: center;
+  box-shadow: 0 0 40px var(--shadow-hover);
+}
+.invest-cta-box h3 {
+  font-family: 'Orbitron', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+.invest-cta-box p {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.7;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+/* ============================================================
    SOCIAL
    ============================================================ */
 #social { background: var(--bg2); }
