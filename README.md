@@ -1,11 +1,14 @@
 # Deep Interactive Entertainment — Geliştirme Notları
 
+Bilal Cin
+
 **Proje:** Tek sayfalık site → modüler klasör yapısına geçiş + yeni özellikler
 **Tarih:** Mart 2025
 
 ## 1. Klasör Yapısı
 
 Tek dosya olan `index.html` aşağıdaki yapıya bölündü:
+
 
 
 frontend/
