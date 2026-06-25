@@ -965,3 +965,270 @@ footer {
   .tcard { padding: 24px 16px; }
   .acard { padding: 20px 16px; }
 }
+
+/* ============================================================
+   ★★★  PREMIUM POLISH LAYER  ★★★
+   Cinematic monochrome enhancements — added on top of the
+   existing design. Fully theme-aware, no new colors.
+   ============================================================ */
+
+/* ---- PRELOADER ---------------------------------------------- */
+.preloader {
+  position: fixed; inset: 0;
+  z-index: 100000;
+  background: var(--bg);
+  display: flex; align-items: center; justify-content: center;
+  transition: opacity .7s ease, visibility .7s ease;
+}
+.preloader.hidden { opacity: 0; visibility: hidden; }
+.pre-inner { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.pre-logo {
+  width: 76px; height: 76px; object-fit: contain;
+  animation: prePulse 1.6s ease-in-out infinite;
+}
+[data-theme="light"] .pre-logo { filter: grayscale(1) brightness(.15); }
+[data-theme="dark"]  .pre-logo { filter: grayscale(1) invert(1); }
+@keyframes prePulse { 0%,100% { transform: scale(1); opacity: .85; } 50% { transform: scale(1.08); opacity: 1; } }
+.pre-name {
+  font-family: 'Orbitron', monospace;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 4px; color: var(--text);
+  opacity: .9; text-align: center;
+}
+.pre-bar {
+  width: 200px; height: 2px;
+  background: var(--border);
+  border-radius: 2px; overflow: hidden;
+}
+.pre-fill { display: block; width: 0%; height: 100%; background: var(--accent); transition: width .2s ease; }
+.pre-pct {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px; letter-spacing: 3px; color: var(--gray);
+}
+
+/* ---- SCROLL PROGRESS ---------------------------------------- */
+.scroll-progress {
+  position: fixed; top: 0; left: 0;
+  height: 3px; width: 100%;
+  background: var(--accent);
+  transform: scaleX(0); transform-origin: 0 50%;
+  z-index: 101;
+  will-change: transform;
+}
+
+/* ---- GRAIN / NOISE OVERLAY ---------------------------------- */
+.grain {
+  position: fixed; inset: 0;
+  z-index: 98;
+  pointer-events: none;
+  opacity: .035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+[data-theme="dark"] .grain { opacity: .05; }
+
+/* ---- CUSTOM CURSOR ------------------------------------------ */
+.cursor-dot, .cursor-ring {
+  position: fixed; top: 0; left: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 100001;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.cursor-dot {
+  width: 7px; height: 7px;
+  background: #fff;
+  transform: translate(-50%, -50%);
+}
+.cursor-ring {
+  width: 38px; height: 38px;
+  border: 1.5px solid #fff;
+  transform: translate(-50%, -50%);
+  transition: width .25s ease, height .25s ease, opacity .3s ease, background .25s ease, border-color .25s ease;
+}
+body.cursor-active .cursor-dot,
+body.cursor-active .cursor-ring { opacity: 1; }
+body.cursor-active.is-hovering .cursor-ring {
+  width: 60px; height: 60px;
+  background: rgba(255,255,255,.12);
+}
+body.cursor-active.is-hovering .cursor-dot { opacity: 0; }
+body.cursor-active,
+body.cursor-active a,
+body.cursor-active button,
+body.cursor-active input,
+body.cursor-active textarea,
+body.cursor-active .feat,
+body.cursor-active [onclick] { cursor: none; }
+
+/* ---- SCROLL CUE (hero) -------------------------------------- */
+.scroll-cue {
+  position: absolute; bottom: 22px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  text-decoration: none; z-index: 2;
+  animation: fu .8s .9s ease both;
+}
+/* Only show the scroll cue when the hero comfortably fits the viewport,
+   so it never overlaps the hero stats on shorter laptop screens. */
+@media (max-height: 920px) { .scroll-cue { display: none; } }
+.scroll-cue-txt {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px; letter-spacing: 4px; color: var(--gray);
+  transition: color .3s;
+}
+.scroll-cue:hover .scroll-cue-txt { color: var(--text); }
+.scroll-cue-line {
+  width: 1.5px; height: 46px;
+  background: var(--border);
+  position: relative; overflow: hidden; border-radius: 2px;
+}
+.scroll-cue-dot {
+  position: absolute; top: 0; left: 0;
+  width: 100%; height: 12px;
+  background: var(--accent);
+  border-radius: 2px;
+  animation: cueRun 1.9s cubic-bezier(.7,0,.3,1) infinite;
+}
+@keyframes cueRun { 0% { top: -14px; } 60%,100% { top: 46px; } }
+
+/* ---- MARQUEE BAND ------------------------------------------- */
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+}
+.marquee-track {
+  display: inline-flex;
+  will-change: transform;
+  animation: marquee 28s linear infinite;
+}
+.marquee-track span {
+  font-family: 'Orbitron', monospace;
+  font-size: 13px; font-weight: 700;
+  letter-spacing: 4px;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--gray);
+  opacity: .55;
+  transition: opacity .3s;
+}
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee:hover .marquee-track span { opacity: .9; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ---- NAV SCROLLED STATE ------------------------------------- */
+nav.scrolled {
+  padding-top: 11px; padding-bottom: 11px;
+  background: var(--nav-bg);
+  box-shadow: 0 6px 30px var(--shadow-hover);
+  backdrop-filter: blur(20px);
+}
+nav.scrolled .logo-img { width: 38px; height: 38px; }
+
+/* ---- HERO: deeper cinematics -------------------------------- */
+.hero-grid {
+  animation: gridDrift 20s linear infinite;
+}
+@keyframes gridDrift { from { background-position: 0 0; } to { background-position: 50px 50px; } }
+
+/* extra drifting light orb */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 30%; left: 50%;
+  width: 520px; height: 520px;
+  transform: translate(-50%,-50%);
+  background: radial-gradient(circle, var(--accent) 0%, transparent 62%);
+  opacity: .04;
+  pointer-events: none;
+  animation: orbFloat 12s ease-in-out infinite;
+  z-index: 0;
+}
+@keyframes orbFloat {
+  0%,100% { transform: translate(-50%,-50%) scale(1); }
+  50%     { transform: translate(-46%,-54%) scale(1.18); }
+}
+
+/* animated sheen sweep across the bold title line */
+.t1 {
+  background: linear-gradient(100deg,
+    var(--text) 0%, var(--text) 38%,
+    var(--gray) 48%, var(--text) 58%, var(--text) 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+  animation: sheen 6s ease-in-out infinite;
+}
+@keyframes sheen { 0%,100% { background-position: 130% 0; } 50% { background-position: -30% 0; } }
+
+/* ---- CARD SPOTLIGHT (follows cursor) ------------------------ */
+.acard, .plat-card, .gcard, .invest-card, .tcard {
+  --mx: 50%; --my: 50%;
+}
+.acard::after, .plat-card .spot, .gcard .spot, .invest-card .spot, .tcard .spot { pointer-events: none; }
+.spotlight {
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .35s ease;
+  background: radial-gradient(360px circle at var(--mx) var(--my),
+    var(--accent), transparent 42%);
+  z-index: 0;
+}
+[data-theme="light"] .spotlight { mix-blend-mode: multiply; }
+[data-theme="dark"]  .spotlight { mix-blend-mode: screen; }
+.plat-card:hover .spotlight,
+.gcard:hover .spotlight,
+.invest-card:hover .spotlight,
+.tcard:hover .spotlight,
+.acard:hover .spotlight { opacity: .10; }
+/* keep card contents above the spotlight */
+.plat-card > *:not(.spotlight),
+.gcard > *:not(.spotlight),
+.invest-card > *:not(.spotlight),
+.tcard > *:not(.spotlight),
+.acard > *:not(.spotlight) { position: relative; z-index: 1; }
+
+/* tilt needs perspective + smoother transform */
+.plat-card, .gcard, .invest-card, .tcard, .acard {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* ---- MAGNETIC BUTTONS --------------------------------------- */
+.btnp, .btns, .btnsub { will-change: transform; }
+
+/* ---- STAGGERED REVEAL VARIANTS ------------------------------ */
+.reveal-up   { opacity: 0; transform: translateY(40px);        transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+.reveal-left { opacity: 0; transform: translateX(-42px);       transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+.reveal-right{ opacity: 0; transform: translateX(42px);        transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+.reveal-scale{ opacity: 0; transform: scale(.92);              transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
+.reveal-up.show, .reveal-left.show, .reveal-right.show, .reveal-scale.show { opacity: 1; transform: none; }
+/* stagger children inside a .stagger container */
+.stagger > * { transition-delay: calc(var(--i, 0) * 80ms); }
+
+/* hide native cursor helpers already scoped; touch fallback below */
+@media (hover: none), (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none !important; }
+  .scroll-cue { display: none; }
+}
+
+/* ---- REDUCED MOTION ----------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .cursor-dot, .cursor-ring { display: none !important; }
+  .marquee-track { animation: none !important; }
+  .t1 { -webkit-text-fill-color: var(--text); color: var(--text); }
+  .preloader { display: none !important; }
+}

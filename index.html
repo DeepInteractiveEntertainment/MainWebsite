@@ -178,6 +178,26 @@
 </head>
 <body>
 
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+  <div class="pre-inner">
+    <img src="assets/images/logo.png" alt="DIE" class="pre-logo">
+    <div class="pre-name">DEEP&nbsp;INTERACTIVE&nbsp;ENTERTAINMENT</div>
+    <div class="pre-bar"><span class="pre-fill" id="preFill"></span></div>
+    <div class="pre-pct" id="prePct">0%</div>
+  </div>
+</div>
+
+<!-- SCROLL PROGRESS -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- NOISE / GRAIN OVERLAY -->
+<div class="grain" aria-hidden="true"></div>
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+<div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+
 <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn" title="Toggle theme">🌙</button>
 
 <!-- NAV -->
@@ -265,7 +285,19 @@
     <div class="sdiv"></div>
     <div class="stat"><span class="sn">IST</span><span class="sl" data-i18n="stat_based">Istanbul Based</span></div>
   </div>
+  <a href="#about" class="scroll-cue" aria-label="Scroll down">
+    <span class="scroll-cue-txt" data-i18n="scroll_cue">SCROLL</span>
+    <span class="scroll-cue-line"><span class="scroll-cue-dot"></span></span>
+  </a>
 </section>
+
+<!-- MARQUEE BAND -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>DEEP INTERACTIVE ENTERTAINMENT ✦ CHAOS BUDZ ✦ PC &amp; CONSOLE ✦ ISTANBUL, TURKEY ✦ INDIE GAME STUDIO ✦ STEAM ✦ PLAYSTATION ✦ XBOX ✦ WE BUILD WORLDS ✦&nbsp;</span>
+    <span>DEEP INTERACTIVE ENTERTAINMENT ✦ CHAOS BUDZ ✦ PC &amp; CONSOLE ✦ ISTANBUL, TURKEY ✦ INDIE GAME STUDIO ✦ STEAM ✦ PLAYSTATION ✦ XBOX ✦ WE BUILD WORLDS ✦&nbsp;</span>
+  </div>
+</div>
 
 <!-- ABOUT -->
 <section id="about">
@@ -287,8 +319,8 @@
       <div class="acard">
         <div class="ctag">// STUDIO.INFO</div>
         <div class="srow">
-          <div class="sb"><span class="n">1</span><span class="l" data-i18n="studio_released">Game Released</span></div>
-          <div class="sb"><span class="n">5</span><span class="l" data-i18n="studio_team">Core Team</span></div>
+          <div class="sb"><span class="n" data-count="1">0</span><span class="l" data-i18n="studio_released">Game Released</span></div>
+          <div class="sb"><span class="n" data-count="5">0</span><span class="l" data-i18n="studio_team">Core Team</span></div>
           <div class="sb"><span class="n">∞</span><span class="l" data-i18n="studio_ambition">Ambition</span></div>
         </div>
         <div class="plat">

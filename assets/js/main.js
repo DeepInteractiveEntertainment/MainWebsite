@@ -23,6 +23,7 @@ const i18n = {
     stat_console:  '& Console',
     stat_global:   'Global Release',
     stat_based:    'Istanbul Based',
+    scroll_cue:    'SCROLL',
     about_title:   'We Are <span>Deep Interactive</span> Entertainment',
     about_p1:      'An independent team skilled in <strong style="color:var(--text)">PS, XBOX, and PC</strong> game development. We aim to develop projects with rich storytelling and fluid gameplay, including online and multiplayer experiences.',
     about_p2:      'Our goal is to realize high quality projects as an experienced team in both design and development.',
@@ -106,6 +107,7 @@ const i18n = {
     stat_console:  '& Konsol',
     stat_global:   'Global Yayın',
     stat_based:    'İstanbul Merkezli',
+    scroll_cue:    'KAYDIR',
     about_title:   'Biz <span>Deep Interactive</span> Entertainment\'ız',
     about_p1:      'PS, XBOX ve PC oyun geliştirme konusunda uzman bağımsız bir ekibiz. <strong style="color:var(--text)">Zengin hikaye anlatımı</strong> ve akıcı oynanışa sahip projeler geliştirmeyi hedefliyoruz.',
     about_p2:      'Amacımız, tasarım ve geliştirme alanında deneyimli bir ekip olarak yüksek kaliteli projeler ortaya koymaktır.',
@@ -189,6 +191,7 @@ const i18n = {
     stat_console:  '& Konsole',
     stat_global:   'Globale Veröffentlichung',
     stat_based:    'Standort Istanbul',
+    scroll_cue:    'SCROLLEN',
     about_title:   'Wir sind <span>Deep Interactive</span> Entertainment',
     about_p1:      'Ein unabhängiges Team mit Expertise in <strong style="color:var(--text)">PS, XBOX und PC</strong>-Spieleentwicklung. Wir entwickeln Projekte mit reicher Erzählung und flüssigem Gameplay.',
     about_p2:      'Unser Ziel ist es, als erfahrenes Team hochwertige Projekte in Design und Entwicklung zu realisieren.',
@@ -272,6 +275,7 @@ const i18n = {
     stat_console:  '& Console',
     stat_global:   'Sortie Mondiale',
     stat_based:    'Basé à Istanbul',
+    scroll_cue:    'DÉFILER',
     about_title:   'Nous sommes <span>Deep Interactive</span> Entertainment',
     about_p1:      'Une équipe indépendante spécialisée dans le développement de jeux <strong style="color:var(--text)">PS, XBOX et PC</strong>. Nous visons des projets avec une narration riche et un gameplay fluide.',
     about_p2:      'Notre objectif est de réaliser des projets de haute qualité en tant qu\'équipe expérimentée en design et développement.',
@@ -355,6 +359,7 @@ const i18n = {
     stat_console:  '& Consola',
     stat_global:   'Lanzamiento Global',
     stat_based:    'Basados en Estambul',
+    scroll_cue:    'DESLIZAR',
     about_title:   'Somos <span>Deep Interactive</span> Entertainment',
     about_p1:      'Un equipo independiente especializado en desarrollo de juegos para <strong style="color:var(--text)">PS, XBOX y PC</strong>. Creamos proyectos con narrativa rica y jugabilidad fluida.',
     about_p2:      'Nuestro objetivo es realizar proyectos de alta calidad como equipo experimentado en diseño y desarrollo.',
@@ -438,6 +443,7 @@ const i18n = {
     stat_console:  '& コンソール',
     stat_global:   'グローバルリリース',
     stat_based:    'イスタンブール拠点',
+    scroll_cue:    'スクロール',
     about_title:   '私たちは <span>Deep Interactive</span> Entertainment です',
     about_p1:      '<strong style="color:var(--text)">PS・Xbox・PC</strong> のゲーム開発を専門とする独立スタジオです。豊かなストーリーと洗練されたゲームプレイ、オンライン・マルチプレイ体験を届けます。',
     about_p2:      'デザインから開発まで、経験豊富なチームが高品質なプロジェクトを実現することを目指しています。',
@@ -521,6 +527,7 @@ const i18n = {
     stat_console:  '& 主机',
     stat_global:   '全球发行',
     stat_based:    '伊斯坦布尔',
+    scroll_cue:    '向下滚动',
     about_title:   '我们是 <span>Deep Interactive</span> Entertainment',
     about_p1:      '一支专注于 <strong style="color:var(--text)">PS、Xbox 和 PC</strong> 游戏开发的独立团队。我们致力于打造剧情丰富、玩法流畅的项目，包括在线与多人游戏体验。',
     about_p2:      '我们的目标是以经验丰富的设计与开发团队，打造高质量的游戏项目。',
@@ -766,4 +773,177 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
   } else {
     applyLang(currentLang);
   }
+})();
+
+/* ============================================================
+   ★★★  PREMIUM POLISH LAYER  ★★★
+   ============================================================ */
+(function premiumPolish() {
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine   = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const lerp = (a, b, n) => a + (b - a) * n;
+  const clamp = (v, mn, mx) => Math.max(mn, Math.min(mx, v));
+
+  /* ---- PRELOADER ---- */
+  (function preloader() {
+    const pre  = document.getElementById('preloader');
+    if (!pre) return;
+    if (reduce) { pre.classList.add('hidden'); return; }
+    const fill = document.getElementById('preFill');
+    const pct  = document.getElementById('prePct');
+    let p = 0;
+    const tick = setInterval(() => {
+      p = Math.min(100, p + Math.random() * 18 + 6);
+      if (fill) fill.style.width = p + '%';
+      if (pct)  pct.textContent = Math.floor(p) + '%';
+      if (p >= 100) clearInterval(tick);
+    }, 120);
+    const done = () => {
+      p = 100;
+      if (fill) fill.style.width = '100%';
+      if (pct)  pct.textContent = '100%';
+      setTimeout(() => pre.classList.add('hidden'), 450);
+    };
+    window.addEventListener('load', () => setTimeout(done, 350));
+    // Safety: never trap the page
+    setTimeout(() => pre.classList.add('hidden'), 4000);
+  })();
+
+  /* ---- SCROLL PROGRESS + NAV STATE ---- */
+  (function scrollFx() {
+    const bar = document.getElementById('scrollProgress');
+    const nav = document.querySelector('nav');
+    let ticking = false;
+    const update = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      const ratio = max > 0 ? h.scrollTop / max : 0;
+      if (bar) bar.style.transform = `scaleX(${ratio})`;
+      if (nav) nav.classList.toggle('scrolled', h.scrollTop > 30);
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    update();
+  })();
+
+  /* ---- CUSTOM CURSOR ---- */
+  if (fine && !reduce) {
+    const dot  = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    if (dot && ring) {
+      document.body.classList.add('cursor-active');
+      let mx = window.innerWidth / 2, my = window.innerHeight / 2;
+      let rx = mx, ry = my;
+      window.addEventListener('mousemove', (e) => {
+        mx = e.clientX; my = e.clientY;
+        dot.style.transform  = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+      }, { passive: true });
+      (function raf() {
+        rx = lerp(rx, mx, 0.18); ry = lerp(ry, my, 0.18);
+        ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+        requestAnimationFrame(raf);
+      })();
+      const hov = 'a, button, .feat, .sico-link, .pbadge, input, textarea, [onclick], .lang-option';
+      document.addEventListener('mouseover', (e) => {
+        if (e.target.closest(hov)) document.body.classList.add('is-hovering');
+      });
+      document.addEventListener('mouseout', (e) => {
+        if (e.target.closest(hov)) document.body.classList.remove('is-hovering');
+      });
+    }
+  }
+
+  /* ---- MAGNETIC BUTTONS ---- */
+  if (fine && !reduce) {
+    document.querySelectorAll('.btnp, .btns, .btnsub').forEach(btn => {
+      const strength = 0.32;
+      btn.addEventListener('mousemove', (e) => {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) * strength;
+        const y = (e.clientY - r.top - r.height / 2) * strength;
+        btn.style.transform = `translate(${x}px, ${y}px)`;
+      });
+      btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+    });
+  }
+
+  /* ---- CARD SPOTLIGHT + 3D TILT ---- */
+  (function cards() {
+    const sel = '.plat-card, .gcard, .invest-card, .tcard, .acard';
+    document.querySelectorAll(sel).forEach(card => {
+      // inject spotlight layer
+      const spot = document.createElement('span');
+      spot.className = 'spotlight';
+      card.prepend(spot);
+
+      if (reduce) return;
+
+      const tiltMax = 6;
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        card.style.setProperty('--mx', (px * 100) + '%');
+        card.style.setProperty('--my', (py * 100) + '%');
+        if (fine) {
+          const rotY = clamp((px - 0.5) * tiltMax * 2, -tiltMax, tiltMax);
+          const rotX = clamp((0.5 - py) * tiltMax * 2, -tiltMax, tiltMax);
+          card.style.transform =
+            `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-6px)`;
+        }
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+  })();
+
+  /* ---- COUNT-UP STATS (scroll-based, no IntersectionObserver) ---- */
+  (function counters() {
+    const els = [...document.querySelectorAll('[data-count]')];
+    if (!els.length) return;
+    const done = new WeakSet();
+    const run = (el) => {
+      const target = parseFloat(el.getAttribute('data-count')) || 0;
+      if (reduce) { el.textContent = target; return; }
+      const dur = 1400; const t0 = performance.now();
+      const step = (now) => {
+        const p = Math.min(1, (now - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.round(target * eased);
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const check = () => {
+      els.forEach(el => {
+        if (done.has(el)) return;
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.9 && r.bottom > 0) { done.add(el); run(el); }
+      });
+    };
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('load', check);
+    check();
+  })();
+
+  /* ---- STAGGERED REVEAL VARIANTS ---- */
+  (function reveals() {
+    // cascade existing card grids
+    ['.plat-cards', '.ggrid', '.invest-grid'].forEach(g => {
+      const grid = document.querySelector(g);
+      if (!grid) return;
+      grid.classList.add('stagger');
+      [...grid.children].forEach((c, i) => c.style.setProperty('--i', i));
+    });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add('show'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-scale')
+      .forEach(el => io.observe(el));
+  })();
 })();
