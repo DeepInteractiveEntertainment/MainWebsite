@@ -1,0 +1,380 @@
+@import "tailwindcss";
+
+@theme {
+  /* ============================================================
+     MODERN — dark slate surfaces · near-white text · violet→blue
+     gradient accent · glass · soft glows. (Token names kept as
+     ink-/fog-/gold-/neon- so every component recolors at once.)
+     ============================================================ */
+
+  /* Surfaces — neutral brand black (matches deepinteractiveentertainment.com) */
+  --color-ink-950: #050505;
+  --color-ink-900: #0a0a0a;
+  --color-ink-850: #111111;
+  --color-ink-800: #161616;
+  --color-ink-700: #242424;
+  --color-ink-600: #333333;
+  --color-ink-500: #474747;
+
+  /* Text — neutral near-white */
+  --color-fog-50: #f4f4f5;
+  --color-fog-100: #e7e7e8;
+  --color-fog-200: #cfcfd1;
+  --color-fog-300: #a6a6a9;
+  --color-fog-400: #78787c;
+  --color-fog-500: #57575a;
+
+  /* Accent — monochrome. Dark theme: white; light theme overrides to black. */
+  --color-gold-200: #ffffff;
+  --color-gold-300: #e8e8e8;
+  --color-gold-400: #ffffff;
+  --color-gold-500: #cfcfcf;
+  --color-gold-600: #9a9a9a;
+  --color-neon-cyan: #ffffff;
+  --color-neon-blue: #e8e8e8;
+  --color-neon-violet: #ffffff;
+  --color-neon-pink: #ffffff;
+  --color-neon-red: #ef4444;
+  --color-neon-lime: #ffffff;
+  --color-neon-amber: #ffffff;
+
+  /* HURDA-G sayfası (.hg) — oyunun paslı demir paleti */
+  --color-iron-950: #070605;
+  --color-iron-900: #0d0b09;
+  --color-iron-850: #14110e;
+  --color-iron-800: #1b1713;
+  --color-iron-700: #2a231c;
+  --color-iron-600: #3a3027;
+  --color-bone-50: #f3ecdc;
+  --color-bone-200: #ddd2bc;
+  --color-bone-400: #a99d86;
+  --color-bone-600: #6f6555;
+  --color-rust-400: #e8661c;
+  --color-signal: #ffbc0d;
+  --color-ok: #73c334;
+  --color-danger: #e0402a;
+
+  /* Fonts (wired from next/font in layout) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: var(--font-space), var(--font-inter), ui-sans-serif,
+    system-ui, sans-serif;
+
+  --radius-xl: 0.9rem;
+  --radius-2xl: 1.25rem;
+  --radius-3xl: 1.75rem;
+
+  --shadow-glow: 0 18px 50px -18px rgba(255, 255, 255, 0.16);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.4),
+    0 30px 60px -30px rgba(0, 0, 0, 0.7);
+}
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #f0f0f0;
+  color-scheme: dark;
+}
+
+/* ---- Light (day) theme — neutral black/white, matches the live site ---- */
+:root[data-theme="light"] {
+  --color-ink-950: #ffffff;
+  --color-ink-900: #f5f5f5;
+  --color-ink-850: #ffffff;
+  --color-ink-800: #ebebeb;
+  --color-ink-700: #dddddd;
+  --color-ink-600: #cccccc;
+  --color-ink-500: #b5b5b5;
+
+  --color-fog-50: #0a0a0a;
+  --color-fog-100: #1a1a1a;
+  --color-fog-200: #2a2a2a;
+  --color-fog-300: #464646;
+  --color-fog-400: #6a6a6a;
+  --color-fog-500: #8a8a8a;
+
+  /* monochrome accent → black on white */
+  --color-gold-200: #333333;
+  --color-gold-300: #1a1a1a;
+  --color-gold-400: #0a0a0a;
+  --color-gold-500: #333333;
+  --color-gold-600: #555555;
+  --color-neon-cyan: #0a0a0a;
+  --color-neon-blue: #333333;
+  --color-neon-violet: #0a0a0a;
+  --color-neon-pink: #1a1a1a;
+  --color-neon-lime: #1a1a1a;
+  --color-neon-amber: #0a0a0a;
+
+  --shadow-glow: 0 18px 50px -18px rgba(0, 0, 0, 0.22);
+
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  color-scheme: light;
+}
+
+* {
+  border-color: rgb(255 255 255 / 0.08);
+}
+:root[data-theme="light"] * {
+  border-color: rgb(0 0 0 / 0.12);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(124, 92, 246, 0.35);
+  color: #fff;
+}
+
+/* Modern gradient-mesh backdrop */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(52rem 40rem at 8% -6%, rgba(139, 92, 246, 0.10), transparent 62%),
+    radial-gradient(46rem 40rem at 100% 4%, rgba(56, 189, 248, 0.06), transparent 58%),
+    radial-gradient(60rem 50rem at 50% 120%, rgba(99, 102, 241, 0.07), transparent 60%),
+    #0a0a0a;
+  pointer-events: none;
+}
+:root[data-theme="light"] body::before {
+  background:
+    radial-gradient(50rem 38rem at 8% -6%, rgba(139, 92, 246, 0.10), transparent 60%),
+    radial-gradient(46rem 40rem at 100% 4%, rgba(56, 189, 248, 0.08), transparent 58%),
+    radial-gradient(60rem 50rem at 50% 118%, rgba(99, 102, 241, 0.06), transparent 60%),
+    #ffffff;
+}
+:root[data-theme="light"] .glass {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(245, 245, 245, 0.88));
+  border-color: rgb(0 0 0 / 0.12);
+}
+
+/* ---- Monochrome accent (white in dark, black in light) ---- */
+.text-gradient {
+  background-image: linear-gradient(100deg, #ffffff, #b8b8b8);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.bg-brand-gradient {
+  background-image: linear-gradient(100deg, #ffffff, #dcdcdc);
+}
+.bg-brand-gradient-anim {
+  background-image: linear-gradient(100deg, #ffffff, #cfcfcf 50%, #ffffff);
+  background-size: 220% 100%;
+  animation: gradient-pan 8s ease infinite;
+}
+:root[data-theme="light"] .text-gradient {
+  background-image: linear-gradient(100deg, #0a0a0a, #555555);
+}
+:root[data-theme="light"] .bg-brand-gradient,
+:root[data-theme="light"] .bg-brand-gradient-anim {
+  background-image: linear-gradient(100deg, #0a0a0a, #2c2c2c);
+}
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* ---- Layout ---- */
+.container-x {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 768px) {
+  .container-x { padding-inline: 2rem; }
+}
+
+/* Glass surface */
+.glass {
+  background: linear-gradient(180deg, rgba(20, 20, 20, 0.72), rgba(10, 10, 10, 0.72));
+  backdrop-filter: blur(14px);
+  border: 1px solid rgb(255 255 255 / 0.10);
+}
+
+.overline {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-gold-300);
+}
+
+.hairline-t { border-top: 1px solid rgb(150 160 220 / 0.12); }
+.hairline-b { border-bottom: 1px solid rgb(150 160 220 / 0.12); }
+
+/* ---- Reveal on scroll ---- */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible { opacity: 1; transform: none; }
+
+.line-reveal { overflow: hidden; }
+.line-reveal > span {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.line-reveal.is-visible > span { transform: translateY(0); }
+
+/* Modern dot-grid backdrop */
+.bg-grid {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+  -webkit-mask-image: radial-gradient(72% 60% at 50% 30%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(72% 60% at 50% 30%, #000 40%, transparent 100%);
+}
+:root[data-theme="light"] .bg-grid {
+  background-image: radial-gradient(circle, rgba(0, 0, 0, 0.07) 1px, transparent 1px);
+}
+
+/* neutralized: was CRT scanlines — now a no-op accent-free overlay */
+.scanlines::after { content: none; }
+
+/* Opacity-only fade-in (hero video clips) */
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.animate-fade { animation: fade-in 0.9s ease both; }
+
+/* Tab switch fade */
+.tab-fade { animation: tab-fade 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+@keyframes tab-fade {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ---- Animations ---- */
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+.animate-float { animation: float 7s ease-in-out infinite; }
+.animate-float-slow { animation: float 11s ease-in-out infinite; }
+
+@keyframes pulse-glow { 0%,100%{opacity:.4} 50%{opacity:.8} }
+.animate-pulse-glow { animation: pulse-glow 8s ease-in-out infinite; }
+
+@keyframes gradient-pan { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
+@keyframes marquee { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+.animate-marquee { animation: marquee 40s linear infinite; }
+
+@keyframes spin-slow { to { transform: rotate(360deg); } }
+.animate-spin-slow { animation: spin-slow 24s linear infinite; }
+
+@keyframes ken-burns { 0%{transform:scale(1.05)} 100%{transform:scale(1.14)} }
+.ken-burns { animation: ken-burns 20s ease-out forwards; }
+
+@keyframes flicker { 0%,19%,21%,55%,57%,100%{opacity:1} 20%,56%{opacity:.6} }
+.animate-flicker { animation: flicker 5s linear infinite; }
+
+/* ============================================================
+   HURDA-G — oyunun ana menüsündeki paslı demir + amber plaka dili.
+   Sadece .hg kapsamında geçerli; sitenin geri kalanını etkilemez.
+   Aynı bileşenler hurda-g.com'da da kullanılıyor.
+   ============================================================ */
+.hg {
+  --color-iron-950: #070605; --color-iron-900: #0d0b09; --color-iron-850: #14110e; --color-iron-800: #1b1713;
+  --color-iron-700: #2a231c; --color-iron-600: #3a3027;
+  --color-bone-50: #f3ecdc; --color-bone-200: #ddd2bc; --color-bone-400: #a99d86; --color-bone-600: #6f6555;
+  --color-amber-300: #ffc65a; --color-amber-400: #f5a524; --color-amber-500: #e08a12;
+  --color-rust-400: #e8661c; --color-signal: #ffbc0d; --color-ok: #73c334; --color-danger: #e0402a;
+  --font-display: var(--font-barlow-condensed), "Arial Narrow", sans-serif;
+  --font-mono: var(--font-share-tech), ui-monospace, monospace;
+  position: relative; background: var(--color-iron-950); color: var(--color-bone-200);
+  font-family: var(--font-barlow), system-ui, sans-serif;
+}
+.hg .font-display { font-family: var(--font-display); }
+.hg .font-mono { font-family: var(--font-mono); }
+.hg .text-iron-950 { color: var(--color-iron-950); }
+.hg .plate {
+  border-style: solid; border-width: 22px;
+  border-image: url("/hurda/ui/main_panel_9slice.webp") 70 fill / 22px stretch;
+  background-clip: padding-box;
+}
+@media (min-width: 640px) { .hg .plate { border-width: 28px; border-image-width: 28px; } }
+.hg .plate-tight { border-width: 16px; border-image-width: 16px; }
+.hg .btn-plate {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  min-height: 52px; padding: 0 1.6rem;
+  border-style: solid; border-width: 14px 20px;
+  border-image: url("/hurda/ui/main_button_normal_9slice.webp") 48 64 fill / 14px 20px stretch;
+  font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--color-bone-50);
+  transition: transform .15s ease, filter .15s ease;
+}
+.hg .btn-plate:hover { transform: translateY(-1px); filter: brightness(1.12); }
+.hg .btn-plate.is-amber { border-image-source: url("/hurda/ui/main_button_selected_9slice.webp"); color: #1a0f04; }
+.hg .scanlines::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgba(0,0,0,.22) 0 1px, transparent 1px 3px);
+  mix-blend-mode: multiply;
+}
+@keyframes hg-blink { 50% { opacity: 0; } }
+.hg .blink { animation: hg-blink 1.1s steps(2) infinite; }
+@keyframes hg-ticker { to { transform: translateX(-50%); } }
+.hg .ticker { animation: hg-ticker 40s linear infinite; }
+.hg .hazard { background: repeating-linear-gradient(-45deg, var(--color-amber-400) 0 14px, #121009 14px 28px); }
+.hg .overline {
+  font-family: var(--font-mono); font-size: .78rem; font-weight: 400; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--color-amber-400);
+}
+.hg .overline::before, .hg .overline::after { content: none; }
+.hg .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+.hg .reveal.is-in { opacity: 1; transform: none; }
+.hg model-viewer { --poster-color: transparent; --progress-bar-color: var(--color-amber-400); }
+
+/* ===== Modern animated backgrounds (AnimatedBg component) ===== */
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(7%, -5%) scale(1.12); }
+  66% { transform: translate(-5%, 6%) scale(0.94); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-8%, 7%) scale(1.18); }
+}
+@keyframes rise {
+  0% { transform: translateY(120%); opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateY(-20%); opacity: 0; }
+}
+@keyframes grid-pan { to { background-position: 48px 48px; } }
+@keyframes sweep {
+  0% { transform: translateX(-140%) skewX(-14deg); }
+  100% { transform: translateX(160%) skewX(-14deg); }
+}
+.animate-drift-a { animation: drift-a 20s ease-in-out infinite; }
+.animate-drift-b { animation: drift-b 26s ease-in-out infinite; }
+.animate-rise { animation: rise linear infinite; }
+.animate-grid-pan { animation: grid-pan 7s linear infinite; }
+.animate-sweep { animation: sweep 8s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal, .line-reveal > span, .hg .reveal { opacity: 1; transform: none; transition: none; }
+  .animate-float,.animate-float-slow,.animate-pulse-glow,.animate-marquee,
+  .animate-spin-slow,.animate-flicker,.ken-burns,.bg-brand-gradient-anim,.tab-fade,
+  .hg .blink,.hg .ticker,
+  .animate-drift-a,.animate-drift-b,.animate-rise,.animate-grid-pan,.animate-sweep {
+    animation: none !important;
+  }
+}
