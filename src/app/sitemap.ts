@@ -7,7 +7,7 @@ import { tools } from "@/lib/tools";
 const base = "https://deepinteractiveentertainment.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["", "/games", "/tools", "/studio", "/invest", "/contact"].map(
+  const staticRoutes = ["", "/games", "/tools", "/publishing", "/studio", "/contact"].map(
     (path) => ({
       url: `${base}${path}`,
       lastModified: new Date(),

@@ -7,7 +7,7 @@ export const ui = {
   nav_games: { en: "Games", tr: "Oyunlar" },
   nav_tools: { en: "Dev Tools", tr: "Geliştirici Araçları" },
   nav_studio: { en: "Studio", tr: "Stüdyo" },
-  nav_invest: { en: "Invest", tr: "Yatırım" },
+  nav_publishing: { en: "Publishing", tr: "Yayıncılık" },
   nav_contact: { en: "Contact", tr: "İletişim" },
   nav_cta: { en: "Join Discord", tr: "Discord'a Katıl" },
 
@@ -124,19 +124,21 @@ export const ui = {
     tr: "PC'den salon konsollarına — her yerdeki her oyuncu için geliştiriyoruz.",
   },
 
-  // ---- Invest ----
-  invest_eyebrow: { en: "Invest", tr: "Yatırım" },
-  invest_title: { en: "Invest in our vision", tr: "Vizyonumuza yatırım yapın" },
-  invest_desc: {
-    en: "Be part of the next generation of independent gaming. Join us as we build worlds that captivate players — and tools that power other studios.",
-    tr: "Bağımsız oyunculuğun yeni neslinin parçası olun. Oyuncuları büyüleyen dünyalar ve diğer stüdyolara güç veren araçlar geliştirirken bize katılın.",
+  // ---- Publishing ----
+  publish_eyebrow: { en: "Publishing", tr: "Yayıncılık" },
+  publish_title: { en: "Let's ship your game together", tr: "Oyununu birlikte çıkaralım" },
+  publish_desc: {
+    en: "Deep Interactive publishes independent games. If you have a playable build and a team that wants to finish it, we want to see it.",
+    tr: "Deep Interactive bağımsız oyunları yayınlıyor. Oynanabilir bir sürümün ve oyununu bitirmek isteyen bir ekibin varsa görmek istiyoruz.",
   },
-  invest_cta_title: { en: "Interested in partnering with us?", tr: "Bizimle ortak olmak ister misiniz?" },
-  invest_cta_desc: {
-    en: "Angel investor, publisher or strategic partner — let's explore opportunities together and build the future of gaming.",
-    tr: "Melek yatırımcı, yayıncı ya da stratejik ortak — birlikte fırsatları değerlendirelim ve oyunun geleceğini kuralım.",
+  // ---- Publishing CTA (ana sayfa) ----
+  publish_cta_eyebrow: { en: "Publishing", tr: "Yayıncılık" },
+  publish_cta_title: { en: "Got a game? Let's ship it together.", tr: "Oyunun mu var? Birlikte çıkaralım." },
+  publish_cta_desc: {
+    en: "We publish independent games: financing, marketing, testing and Steam release. Send us your build.",
+    tr: "Bağımsız oyunları yayınlıyoruz: finansman, pazarlama, test ve Steam çıkışı. Sürümünü bize gönder.",
   },
-  invest_cta_btn: { en: "Get in touch", tr: "İletişime geçin" },
+  publish_cta_btn: { en: "Pitch your game", tr: "Oyununu gönder" },
 
   // ---- Contact ----
   contact_eyebrow: { en: "Contact", tr: "İletişim" },

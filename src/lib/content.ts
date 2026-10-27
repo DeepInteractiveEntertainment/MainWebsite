@@ -7,8 +7,8 @@ export const navLinks: NavLink[] = [
   { key: "nav_home", href: "/" },
   { key: "nav_games", href: "/games" },
   { key: "nav_tools", href: "/tools" },
+  { key: "nav_publishing", href: "/publishing" },
   { key: "nav_studio", href: "/studio" },
-  { key: "nav_invest", href: "/invest" },
   { key: "nav_contact", href: "/contact" },
 ];
 

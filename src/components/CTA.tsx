@@ -15,20 +15,20 @@ export default function CTA() {
         <Reveal className="mx-auto max-w-3xl text-center">
           <span className="overline inline-flex items-center justify-center gap-3">
             <span className="h-px w-8 bg-gold-400/60" />
-            {t(ui.invest_eyebrow)}
+            {t(ui.publish_cta_eyebrow)}
           </span>
           <h2 className="mt-6 font-display text-4xl font-semibold leading-tight tracking-tight text-fog-50 sm:text-5xl">
-            {t(ui.invest_cta_title)}
+            {t(ui.publish_cta_title)}
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-fog-400">
-            {t(ui.invest_cta_desc)}
+            {t(ui.publish_cta_desc)}
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-x-10 gap-y-4 sm:flex-row">
             <Link
-              href="/contact"
+              href="/publishing#pitch"
               className="group inline-flex items-center gap-3 border-b border-gold-400/50 pb-1.5 text-sm font-semibold uppercase tracking-[0.18em] text-fog-50 transition-colors hover:border-gold-400 hover:text-gold-300"
             >
-              {t(ui.invest_cta_btn)}
+              {t(ui.publish_cta_btn)}
               <ArrowRight className="h-4 w-4 text-gold-400 transition-transform group-hover:translate-x-1" />
             </Link>
             <a
