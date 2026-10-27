@@ -427,6 +427,14 @@ export default function HurdaGPage() {
                 {t({ tr: "Diğer oyunlar", en: "Other games" })} <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
+            <p className="mt-6 flex flex-wrap justify-center gap-5 text-sm">
+              <a href={`${SITE_URL}/terms`} target="_blank" rel="noopener noreferrer" className="text-bone-400 hover:text-amber-300">
+                {t({ tr: "Hizmet Koşulları", en: "Terms of Service" })}
+              </a>
+              <a href={`${SITE_URL}/privacy`} target="_blank" rel="noopener noreferrer" className="text-bone-400 hover:text-amber-300">
+                {t({ tr: "Gizlilik Politikası", en: "Privacy Policy" })}
+              </a>
+            </p>
           </div>
         </Plate>
       </section>
